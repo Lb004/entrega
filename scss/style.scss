@@ -1,0 +1,283 @@
+@use "sass:color";
+
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$font-main: 'Segoe UI', sans-serif;
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin transition($property: all, $duration: 0.3s, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+@mixin hover-transform($scale: 1.05) {
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+%btn-style {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+%card-shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+body {
+  font-family: $font-main;
+  background-color: #f8f9fa;
+  color: #212529;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+header {
+  background-color: $primary-color;
+  padding: 1rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  #logo {
+    max-height: 50px;
+    width: auto;
+    @include transition(transform, 0.3s, ease);
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  
+  .navbar {
+    padding: 0;
+    
+    &-dark {
+      .navbar-nav {
+        .nav-item {
+          margin: 0 0.5rem;
+          
+          .nav-link {
+            color: white;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            @include transition(all, 0.3s, ease);
+            
+            &:hover, &.active {
+              color: rgba(255, 255, 255, 0.85);
+            }
+            
+            &::after {
+              content: '';
+              position: absolute;
+              width: 0;
+              height: 2px;
+              bottom: 0;
+              left: 0;
+              background-color: white;
+              @include transition(width, 0.3s, ease);
+            }
+            
+            &:hover::after, &.active::after {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+main {
+  min-height: calc(100vh - 180px); // Altura mínima para sticky footer
+  padding: 2rem 0;
+  
+  h1 {
+    @include flex-center;
+    color: $primary-color;
+    margin-bottom: 2rem;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background-color: $primary-color;
+    }
+  }
+  
+  section {
+    margin-bottom: 3rem;
+    
+    h3 {
+      color: color.adjust($primary-color, $saturation: -20%);
+      margin-bottom: 1.5rem;
+    }
+  }
+  
+  .formulario-contacto {
+    @extend %card-shadow;
+    padding: 2rem;
+    background-color: white;
+    
+    .form-control {
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      @include transition(border-color, 0.15s, ease-in-out);
+      
+      &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 0 0.25rem rgba($primary-color, 0.25);
+      }
+    }
+    
+    .btn {
+      @include transition(all, 0.3s, ease);
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+  
+  .card {
+    @extend %card-shadow;
+    border: none;
+    overflow: hidden;
+    @include transition(transform, 0.3s, ease);
+    
+    &:hover {
+      transform: translateY(-5px);
+    }
+    
+    img {
+      @include transition(transform, 0.5s, ease);
+      
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+  }
+  
+  .btn-primary {
+    @extend %btn-style;
+    background-color: color.adjust($primary-color, $lightness: -10%);
+    border: none;
+    @include transition(background-color, 0.3s, ease);
+    
+    &:hover {
+      background-color: color.adjust($primary-color, $lightness: -20%);
+    }
+  }
+  
+  #hero {
+    text-align: center;
+    padding: 3rem 0;
+    
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      @include transition(transform, 0.5s, ease);
+      
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+  }
+  
+  #servicios-lista {
+    article {
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      @extend %card-shadow;
+      height: 100%;
+      
+      h3 {
+        color: $primary-color;
+        margin-bottom: 1rem;
+      }
+      
+      h4 {
+        font-size: 1.1rem;
+        color: $secondary-color;
+        margin: 0.5rem 0;
+        @include transition(transform, 0.2s, ease);
+        
+        &:hover {
+          transform: translateX(5px);
+          color: $primary-color;
+        }
+      }
+    }
+    
+    img {
+      border-radius: 8px;
+      @include transition(transform, 0.5s, ease);
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+footer {
+  background-color: $secondary-color;
+  color: white;
+  padding: 1.9rem 0;
+  text-align: center;
+  
+  p {
+    margin-bottom: 0;
+    
+    a {
+      color: white;
+      text-decoration: underline;
+      @include transition(color, 0.3s, ease);
+      
+      &:hover {
+        color: color.adjust(white, $alpha: -0.2);
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    #logo {
+      max-height: 40px;
+    }
+    
+    .navbar-toggler {
+      border: none;
+      padding: 0.25rem 0.5rem;
+      
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+  
+  main {
+    h1 {
+      font-size: 2rem;
+    }
+    
+    .formulario-contacto {
+      padding: 1.5rem;
+    }
+  }
+}
